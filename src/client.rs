@@ -1,27 +1,33 @@
 extern crate reqwest;
-
 /**
- *
  * Client for TD Ameritrade rest calls
  *
  * */
 pub mod client {
+    // use key::AUTH;
+    // use key::REFRESH;
+    //
+    // use std::borrow::Borrow;
+
+    use crate::key::key::KEY;
+    use crate::key::key::AUTH;
+    use core::future::Future;
+    use reqwest::Error;
+    use reqwest::Response;
+
     type RClient = reqwest::Client;
+    type RBuilder = reqwest::RequestBuilder;
 
-    lazy_static! {
-        static ref GO: RClient = RClient::new();
-    }
-
-    pub struct Client {
-        access_code: String,
-        refresh_code: String,
-        key: String,
-    }
+    pub struct Client;
 
     impl Client {
-        fn get() {}
-        fn post() {}
-        fn put() {}
-        fn delete() {}
+        pub fn retrieve() -> reqwest::Client {
+            reqwest::Client::new()
+        }
+
+        pub fn auth(rb: RBuilder) -> reqwest::RequestBuilder {
+            // rb.bearer_auth(AUTH)
+            rb.header("Bearer", AUTH).query(&[("apikey", KEY)])
+        }
     }
 }

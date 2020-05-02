@@ -12,3 +12,4 @@ tokio = {version = "*", features = ["full"]}
 serde_json = "*"
 state = { version = "*", features = ["tls"] }
 lazy_static ="*"
+tinytemplate = "1.0.4"
