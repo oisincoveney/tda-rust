@@ -33,7 +33,17 @@ mod tests {
 
     #[tokio::test]
     async fn titties() {
-        println!("{:?}", quotes::get_quote("SPY").await);
+        let s = quotes::get_quote("SPY").await;
+        let path = Path::new("test.json");
+        let mut file = match File::create(&path) {
+            Err(e) => panic!("{}", e),
+            Ok(file) => file
+        };
+
+        match file.write_all(s.as_bytes()) {
+            Err(e) => eprintln!("{}", e),
+            Ok(_) => println!("successfully wrote to {}", path.display()),
+        };
     }
 
     #[tokio::test]
@@ -48,7 +58,7 @@ mod tests {
         let s: String = price_history::get_price_history("SPY", &options).await;
         println!("{:?}", s);
 
-        let path = Path::new("test.txt");
+        let path = Path::new("test.json");
         let mut file = match File::create(&path) {
             Err(e) => panic!("{}", e),
             Ok(file) => file

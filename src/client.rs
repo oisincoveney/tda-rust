@@ -52,7 +52,7 @@ pub async fn json<T: DeserializeOwned>(rb: reqwest::RequestBuilder, key_type: Ap
         .send()
         .await
         .unwrap()
-        .json()
+        .json::<T>()
         .await;
 
     data
