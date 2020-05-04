@@ -23,111 +23,27 @@ pub(crate) mod price_history {
             client::retrieve().get(&lnk).query(&option_vec), ApiKeyType::Query
         ).await;
 
-        ph_data.unwrap()
+        match ph_data {
+            Ok(x) => x,
+            Err(_) => unimplemented!(),
+        }
     }
 
     #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
     pub struct PriceHistoryData {
-        pub candles: Candles,
-        pub empty: Empty,
-        pub symbol: Symbol,
+        pub candles: Vec<Candle>,
+        pub symbol: String,
+        pub empty: bool,
     }
 
     #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Candles {
-        #[serde(rename = "type")]
-        pub type_field: String,
-        pub description: String,
-        pub items: Items,
+    pub struct Candle {
+        pub open: f64,
+        pub high: f64,
+        pub low: f64,
+        pub close: f64,
+        pub volume: i64,
+        pub datetime: i64,
     }
 
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Items {
-        #[serde(rename = "type")]
-        pub type_field: String,
-        pub properties: Properties,
-    }
-
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Properties {
-        pub close: Close,
-        pub datetime: Datetime,
-        pub high: High,
-        pub low: Low,
-        pub open: Open,
-        pub volume: Volume,
-    }
-
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Close {
-        #[serde(rename = "type")]
-        pub type_field: String,
-        pub format: String,
-        pub description: String,
-    }
-
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Datetime {
-        #[serde(rename = "type")]
-        pub type_field: String,
-        pub format: String,
-        pub description: String,
-    }
-
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct High {
-        #[serde(rename = "type")]
-        pub type_field: String,
-        pub format: String,
-        pub description: String,
-    }
-
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Low {
-        #[serde(rename = "type")]
-        pub type_field: String,
-        pub format: String,
-        pub description: String,
-    }
-
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Open {
-        #[serde(rename = "type")]
-        pub type_field: String,
-        pub format: String,
-        pub description: String,
-    }
-
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Volume {
-        #[serde(rename = "type")]
-        pub type_field: String,
-        pub format: String,
-        pub description: String,
-    }
-
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Empty {
-        #[serde(rename = "type")]
-        pub type_field: String,
-    }
-
-    #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-    #[serde(rename_all = "camelCase")]
-    pub struct Symbol {
-        #[serde(rename = "type")]
-        pub type_field: String,
-        pub description: String,
-    }
 }
