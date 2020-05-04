@@ -1,29 +1,22 @@
-pub mod quotes {
-    use crate::client::client::Client;
-    use crate::key::key::KEY;
-    use crate::key::key::AUTH;
+mod links;
 
-    pub(crate) struct Quote {
-        link: String
+pub mod quotes {
+    use crate::client;
+    use crate::quotes::links;
+    use crate::client::ApiKeyType;
+
+    pub async fn get_quote(symbol: &str) -> String {
+        let lnk = str::replace(links::GET_SINGLE_QUOTE, "{symbol}", symbol);
+
+        client::text(client::retrieve().get(&lnk), ApiKeyType::Query).await
     }
 
-    impl Quote {
-        pub async fn get_quote(symbol: &str) {
-            let lnk = format!("https://api.tdameritrade.com/v1/marketdata/{symbol}/quotes", symbol = symbol);
+    pub async fn get_quotes(symbols: Vec<String>) -> String {
+        let sym_str: String = symbols.join(",");
 
-            println!("{:?}", lnk);
-
-            let response =
-                Client::auth(
-                    Client::retrieve()
-                        .get(&lnk)
-                )
-                    .send()
-                    .await
-                    .unwrap();
-            println!("{:?}", response);
-            let text = response.text().await;
-            println!("{:?}", text);
-        }
+        client::text(client::retrieve()
+                         .get(links::GET_QUOTE)
+                         .query(&sym_str), ApiKeyType::Query,
+        ).await
     }
 }
