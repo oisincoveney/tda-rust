@@ -19,6 +19,7 @@ mod tests {
         quotes::quotes,
         price_history::price_history,
         serde_json::json,
+        price_history::ml_testing
     };
     use std::path::Path;
     use std::fs::File;
@@ -70,5 +71,10 @@ mod tests {
         };
 
         let p: price_history::PriceHistoryData = price_history::get_price_history_json("SPY", &options).await;
+    }
+
+    #[test]
+    fn titties3() {
+        ml_testing::testing();
     }
 }
