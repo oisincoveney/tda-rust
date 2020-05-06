@@ -16,7 +16,7 @@ pub mod quotes {
 
         client::text(client::retrieve()
                          .get(links::GET_QUOTE)
-                         .query(&sym_str), ApiKeyType::Query,
+                         .query(&["symbols", &sym_str]), ApiKeyType::Query,
         ).await
     }
 }
