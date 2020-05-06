@@ -72,20 +72,20 @@ mod tests {
 
     #[tokio::test]
     async fn titties3() {
-        let mut options: HashMap<&str, &str> = HashMap::new();
-        options.insert("symbol", "SPY");
-        options.insert("contractType", "ALL");
-        options.insert("strikeCount", "30");
-        options.insert("includeQuotes", "TRUE");
-        options.insert("strategy", "SIMPLE");
-        options.insert("interval", "0.10");
-        options.insert("range", "ALL");
-        options.insert("fromDate", "2020-04-01");
-        options.insert("toDate", "2020-05-05");
-        options.insert("expMonth", "ALL");
-        options.insert("optionType", "ALL");
+        let mut options: Vec<(&str, &str)> = vec![
+            ("symbol", "SPY"),
+            ("contractType", "CALL"),
+            ("strikeCount", "1"),
+            ("includeQuotes", "TRUE"),
+            ("strategy", "SINGLE"),
+            ("range", "ALL"),
+            ("fromDate", "2020-03-01"),
+            ("toDate", "2020-06-05"),
+            ("expMonth", "ALL"),
+            ("optionType", "ALL")
+        ];
 
-        let s = option_chains::get_option_chain(&options).await;
-        println!("{}", s);
+        let value = option_chains::get_option_chain(&options).await;
+        println!("{:#?}", value);
     }
 }
