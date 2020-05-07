@@ -86,6 +86,17 @@ mod tests {
         ];
 
         let value = option_chains::get_option_chain(&options).await;
-        println!("{:#?}", value);
+        println!("{:#?}", value.call_exp_date_map);
+
+        for i in value.call_exp_date_map {
+            for j in i.1 {
+                for k in j.1 {
+                    println!("{:?}", k);
+                    // for (a, b) in k.iter() {
+                    //     println!("{:?} : {:?}", a, b);
+                    // }
+                }
+            }
+        }
     }
 }
